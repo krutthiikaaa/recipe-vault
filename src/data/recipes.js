@@ -185,7 +185,7 @@ const recipes = [
     category: "Arabian",
     cookTime: "25 mins",
     difficulty: "Easy",
-    image: "https://images.unsplash.com/photo-1593001874117-c99c800e3eb2",
+    image: "/images/falafel.png",
     shortDescription:
       "Crispy deep-fried chickpea balls served with dips and pita.",
     ingredients: [
@@ -209,7 +209,7 @@ const recipes = [
     category: "Arabian",
     cookTime: "15 mins",
     difficulty: "Easy",
-    image: "https://images.unsplash.com/photo-1571197119282-7c4c1c6e3f18",
+    image: "/images/hummus.png",
     shortDescription:
       "Creamy chickpea dip served with pita bread.",
     ingredients: [
@@ -232,7 +232,7 @@ const recipes = [
     category: "Arabian",
     cookTime: "40 mins",
     difficulty: "Medium",
-    image: "https://images.unsplash.com/photo-1625944525533-473f1b3d54d3",
+    image: "/images/kunafa.png",
     shortDescription:
       "Sweet Middle Eastern dessert with cheese and crispy pastry.",
     ingredients: [

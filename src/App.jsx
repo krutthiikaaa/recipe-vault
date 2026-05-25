@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import Explore from './pages/Explore';
 
 function App() {
   return (
@@ -8,8 +9,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Future routes */}
-        <Route path="/explore" element={<PlaceholderPage title="Explore Recipes" />} />
+        <Route path="/explore" element={<Explore />} />
         <Route path="/add-recipe" element={<PlaceholderPage title="Add Recipe" />} />
         <Route path="/favorites" element={<PlaceholderPage title="Favorites" />} />
         <Route path="/recipe/:id" element={<PlaceholderPage title="Recipe Details" />} />
