@@ -1,0 +1,522 @@
+/* ============================================
+   Recipe Vault — Home Page Styles
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ---------- Hero Section ---------- */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 28px 60px;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.35) saturate(1.2);
+}
+
+.hero__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 21, 16, 0.4) 0%,
+    rgba(26, 21, 16, 0.75) 60%,
+    #1a1510 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e8853b;
+  background: rgba(232, 133, 59, 0.1);
+  border: 1px solid rgba(232, 133, 59, 0.2);
+  border-radius: 24px;
+  backdrop-filter: blur(6px);
+}
+
+.hero__badge-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.hero__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #faf5ef;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.hero__title-accent {
+  background: linear-gradient(135deg, #f5a563, #e8853b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: rgba(250, 245, 239, 0.6);
+  line-height: 1.65;
+  max-width: 520px;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 30px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #e8853b, #d47530);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(232, 133, 59, 0.3);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+
+.hero__cta:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(232, 133, 59, 0.45);
+}
+
+.hero__cta:active {
+  transform: scale(0.97);
+}
+
+.hero__cta-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.hero__cta--outline {
+  background: transparent;
+  border: 1.5px solid rgba(250, 245, 239, 0.15);
+  color: rgba(250, 245, 239, 0.8);
+  box-shadow: none;
+}
+
+.hero__cta--outline:hover {
+  border-color: rgba(232, 133, 59, 0.4);
+  color: #e8853b;
+  box-shadow: 0 4px 20px rgba(232, 133, 59, 0.1);
+}
+
+/* ---------- Search Bar ---------- */
+.home-search {
+  max-width: 620px;
+  margin: -28px auto 0;
+  position: relative;
+  z-index: 2;
+  padding: 0 28px;
+}
+
+.home-search__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px 6px 20px;
+  background: rgba(45, 36, 28, 0.7);
+  border: 1px solid rgba(210, 150, 80, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.home-search__wrapper:focus-within {
+  border-color: rgba(232, 133, 59, 0.4);
+  box-shadow: 0 4px 24px rgba(232, 133, 59, 0.1);
+}
+
+.home-search__icon {
+  width: 20px;
+  height: 20px;
+  color: rgba(250, 245, 239, 0.35);
+  flex-shrink: 0;
+}
+
+.home-search__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  color: #faf5ef;
+  padding: 12px 0;
+}
+
+.home-search__input::placeholder {
+  color: rgba(250, 245, 239, 0.3);
+}
+
+.home-search__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(135deg, #e8853b, #d47530);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.home-search__btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 16px rgba(232, 133, 59, 0.3);
+}
+
+/* ---------- Section Shared ---------- */
+.home-section {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 60px 28px 0;
+}
+
+.home-section__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.home-section__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #faf5ef;
+  line-height: 1.2;
+}
+
+.home-section__subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(250, 245, 239, 0.45);
+  margin-top: 4px;
+}
+
+.home-section__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e8853b;
+  text-decoration: none;
+  padding: 6px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: gap 0.25s ease,
+              color 0.25s ease;
+}
+
+.home-section__link:hover {
+  gap: 10px;
+  color: #f5a563;
+}
+
+.home-section__link-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+
+.home-section__link:hover .home-section__link-icon {
+  transform: translateX(3px);
+}
+
+/* ---------- Categories ---------- */
+.categories__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 14px;
+}
+
+.category-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: rgba(45, 36, 28, 0.5);
+  border: 1px solid rgba(210, 150, 80, 0.08);
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.25s ease,
+              border-color 0.25s ease,
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.category-chip:hover {
+  background: rgba(232, 133, 59, 0.08);
+  border-color: rgba(232, 133, 59, 0.25);
+  transform: translateY(-3px);
+}
+
+.category-chip.active {
+  background: rgba(232, 133, 59, 0.12);
+  border-color: rgba(232, 133, 59, 0.35);
+}
+
+.category-chip__emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.category-chip__label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(250, 245, 239, 0.75);
+  white-space: nowrap;
+}
+
+.category-chip:hover .category-chip__label,
+.category-chip.active .category-chip__label {
+  color: #faf5ef;
+}
+
+/* ---------- Recipes Grid ---------- */
+.recipes__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* ---------- View All Button ---------- */
+.home-view-all {
+  display: flex;
+  justify-content: center;
+  padding: 48px 28px 80px;
+}
+
+.home-view-all__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #e8853b;
+  background: transparent;
+  border: 1.5px solid rgba(232, 133, 59, 0.3);
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease,
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+
+.home-view-all__btn:hover {
+  background: rgba(232, 133, 59, 0.08);
+  border-color: #e8853b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(232, 133, 59, 0.15);
+}
+
+.home-view-all__btn:active {
+  transform: scale(0.97);
+}
+
+.home-view-all__btn-icon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s ease;
+}
+
+.home-view-all__btn:hover .home-view-all__btn-icon {
+  transform: translateX(3px);
+}
+
+/* ---------- Stats Strip ---------- */
+.home-stats {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 50px 28px 0;
+}
+
+.home-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.home-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  background: rgba(45, 36, 28, 0.4);
+  border: 1px solid rgba(210, 150, 80, 0.06);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.home-stat__number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #e8853b;
+  line-height: 1;
+}
+
+.home-stat__label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(250, 245, 239, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 420px;
+    padding: 60px 20px 50px;
+  }
+
+  .hero__title {
+    font-size: 2.2rem;
+  }
+
+  .hero__description {
+    font-size: 0.92rem;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero__cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .home-search {
+    padding: 0 20px;
+  }
+
+  .home-section {
+    padding: 44px 20px 0;
+  }
+
+  .home-section__title {
+    font-size: 1.4rem;
+  }
+
+  .categories__grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .category-chip {
+    padding: 12px 14px;
+    gap: 8px;
+  }
+
+  .category-chip__emoji {
+    font-size: 1.2rem;
+  }
+
+  .category-chip__label {
+    font-size: 0.75rem;
+  }
+
+  .recipes__grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .home-stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 1.8rem;
+  }
+
+  .hero__badge {
+    font-size: 0.65rem;
+  }
+
+  .home-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .categories__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

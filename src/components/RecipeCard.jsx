@@ -1,0 +1,125 @@
+import { useState, useCallback } from 'react';
+import { Heart, Clock, ChefHat, Flame } from 'lucide-react';
+import './RecipeCard.css';
+
+/**
+ * RecipeCard — Reusable recipe card component.
+ *
+ * @param {Object}   props
+ * @param {string}   props.image        - URL of the recipe image
+ * @param {string}   props.title        - Recipe title
+ * @param {string}   props.category     - Category label (e.g. "Dessert", "Main Course")
+ * @param {string}   props.cookingTime  - Cooking time (e.g. "30 min")
+ * @param {boolean}  [props.isFavorite] - Initial favorite state (default: false)
+ * @param {number}   [props.difficulty] - Difficulty 1–3 (optional)
+ * @param {Function} [props.onFavoriteToggle] - Callback when heart is toggled, receives new boolean
+ * @param {Function} [props.onClick]    - Callback when the card body is clicked
+ */
+export default function RecipeCard({
+  image,
+  title,
+  category,
+  cookingTime,
+  isFavorite: initialFavorite = false,
+  difficulty,
+  onFavoriteToggle,
+  onClick,
+}) {
+  const [favorite, setFavorite] = useState(initialFavorite);
+  const [pop, setPop] = useState(false);
+
+  const handleFavorite = useCallback(
+    (e) => {
+      e.stopPropagation(); // prevent card click
+      const next = !favorite;
+      setFavorite(next);
+      onFavoriteToggle?.(next);
+
+      // Trigger pop animation
+      setPop(true);
+      const timer = setTimeout(() => setPop(false), 450);
+      return () => clearTimeout(timer);
+    },
+    [favorite, onFavoriteToggle]
+  );
+
+  const handleCardClick = () => {
+    onClick?.();
+  };
+
+  // Build difficulty dots (1–3)
+  const renderDifficulty = () => {
+    if (!difficulty || difficulty < 1 || difficulty > 3) return null;
+    return (
+      <>
+        <span className="recipe-card__meta-dot" />
+        <span className="recipe-card__meta-item">
+          <Flame className="recipe-card__meta-icon" />
+          <span className="recipe-card__difficulty">
+            {[1, 2, 3].map((level) => (
+              <span
+                key={level}
+                className={`recipe-card__difficulty-dot${
+                  level <= difficulty ? ' filled' : ''
+                }`}
+              />
+            ))}
+          </span>
+        </span>
+      </>
+    );
+  };
+
+  return (
+    <article className="recipe-card" onClick={handleCardClick}>
+      {/* ---- Image ---- */}
+      <div className="recipe-card__image-wrapper">
+        {image ? (
+          <img
+            className="recipe-card__image"
+            src={image}
+            alt={title}
+            loading="lazy"
+          />
+        ) : (
+          <div className="recipe-card__image--placeholder">
+            <ChefHat />
+          </div>
+        )}
+        <div className="recipe-card__image-overlay" aria-hidden="true" />
+
+        {/* Category badge */}
+        {category && (
+          <span className="recipe-card__category">{category}</span>
+        )}
+
+        {/* Favorite heart */}
+        <button
+          className={`recipe-card__favorite${favorite ? ' active' : ''}${
+            pop ? ' pop' : ''
+          }`}
+          onClick={handleFavorite}
+          aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
+          type="button"
+        >
+          <Heart fill={favorite ? 'currentColor' : 'none'} />
+        </button>
+      </div>
+
+      {/* ---- Body ---- */}
+      <div className="recipe-card__body">
+        <h3 className="recipe-card__title">{title}</h3>
+
+        <div className="recipe-card__meta">
+          {cookingTime && (
+            <span className="recipe-card__meta-item">
+              <Clock className="recipe-card__meta-icon" />
+              {cookingTime}
+            </span>
+          )}
+          {renderDifficulty()}
+        </div>
+      </div>
+    </article>
+  );
+}
