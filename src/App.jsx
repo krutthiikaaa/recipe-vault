@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Explore from './pages/Explore';
 import Favorites from './pages/Favorites';
 import AddRecipe from './pages/AddRecipe';
+import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuth } from './context/AuthContext';
@@ -47,6 +48,14 @@ function App() {
           element={
             <ProtectedRoute>
               <AddRecipe />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

@@ -7,6 +7,7 @@ import {
   Heart,
   Search,
   LogOut,
+  User,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
@@ -106,7 +107,17 @@ export default function Navbar() {
           </button>
           {isAuthenticated && (
             <button
-              className="navbar__action-btn navbar__action-btn--profile"
+              className="navbar__action-btn navbar__action-btn--avatar"
+              aria-label="View profile"
+              type="button"
+              onClick={() => navigate('/profile')}
+            >
+              <User />
+            </button>
+          )}
+          {isAuthenticated && (
+            <button
+              className="navbar__action-btn navbar__action-btn--logout"
               aria-label="Logout"
               type="button"
               onClick={openLogoutConfirm}
@@ -172,9 +183,25 @@ export default function Navbar() {
           {isAuthenticated && (
             <button
               className="navbar__mobile-action-btn"
+              aria-label="View profile"
+              type="button"
+              onClick={() => {
+                closeMenu();
+                navigate('/profile');
+              }}
+            >
+              <User />
+            </button>
+          )}
+          {isAuthenticated && (
+            <button
+              className="navbar__mobile-action-btn"
               aria-label="Logout"
               type="button"
-              onClick={openLogoutConfirm}
+              onClick={() => {
+                closeMenu();
+                openLogoutConfirm();
+              }}
             >
               <LogOut />
             </button>

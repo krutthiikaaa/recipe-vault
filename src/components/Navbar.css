@@ -210,13 +210,28 @@
   height: 20px;
 }
 
-/* Profile button special */
-.navbar__action-btn--profile {
+.navbar__action-btn--avatar {
+  margin-left: 4px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  color: #faf5ef;
+}
+
+.navbar__action-btn--avatar:hover {
+  border-color: rgba(232, 133, 59, 0.35);
+  background: rgba(232, 133, 59, 0.12);
+  color: #fff;
+}
+
+.navbar__action-btn--logout {
   margin-left: 4px;
   border: 1.5px solid rgba(255, 255, 255, 0.1);
 }
 
-.navbar__action-btn--profile:hover {
+.navbar__action-btn--logout:hover {
   border-color: var(--accent-warm);
   color: var(--accent-warm);
   background: rgba(232, 133, 59, 0.08);
