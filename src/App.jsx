@@ -1,21 +1,77 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
 import Favorites from './pages/Favorites';
 import AddRecipe from './pages/AddRecipe';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import { useAuth } from './context/AuthContext';
+
+function ProtectedRoute({ children }) {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+}
 
 function App() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div>
-      <Navbar />
+      {isAuthenticated && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/add-recipe" element={<AddRecipe />} />
-        <Route path="/recipe/:id" element={<ComingSoon title="Recipe Details" />} />
-        <Route path="*" element={<ComingSoon title="Page Not Found" />} />
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? <Home /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/explore"
+          element={
+            <ProtectedRoute>
+              <Explore />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <ProtectedRoute>
+              <Favorites />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-recipe"
+          element={
+            <ProtectedRoute>
+              <AddRecipe />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recipe/:id"
+          element={
+            <ProtectedRoute>
+              <ComingSoon title="Recipe Details" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
+        />
+        <Route
+          path="/signup"
+          element={isAuthenticated ? <Navigate to="/" replace /> : <Signup />}
+        />
+        <Route
+          path="*"
+          element={
+            <Navigate to={isAuthenticated ? '/' : '/login'} replace />
+          }
+        />
       </Routes>
     </div>
   );

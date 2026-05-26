@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   ChefHat,
   Home,
   PlusCircle,
   Heart,
   Search,
-  UserRound,
+  LogOut,
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const NAV_LINKS = [
@@ -19,7 +20,25 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
+
+  const openLogoutConfirm = () => {
+    setMenuOpen(false);
+    setShowLogoutConfirm(true);
+  };
+
+  const closeLogoutConfirm = () => {
+    setShowLogoutConfirm(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setShowLogoutConfirm(false);
+    navigate('/login');
+  };
 
   /* ---- Close mobile menu on route change ---- */
   useEffect(() => {
@@ -85,13 +104,16 @@ export default function Navbar() {
           >
             <Search />
           </button>
-          <button
-            className="navbar__action-btn navbar__action-btn--profile"
-            aria-label="User profile"
-            type="button"
-          >
-            <UserRound />
-          </button>
+          {isAuthenticated && (
+            <button
+              className="navbar__action-btn navbar__action-btn--profile"
+              aria-label="Logout"
+              type="button"
+              onClick={openLogoutConfirm}
+            >
+              <LogOut />
+            </button>
+          )}
         </div>
 
         {/* ---- Hamburger Button (mobile) ---- */}
@@ -147,15 +169,35 @@ export default function Navbar() {
           >
             <Search />
           </button>
-          <button
-            className="navbar__mobile-action-btn"
-            aria-label="User profile"
-            type="button"
-          >
-            <UserRound />
-          </button>
+          {isAuthenticated && (
+            <button
+              className="navbar__mobile-action-btn"
+              aria-label="Logout"
+              type="button"
+              onClick={openLogoutConfirm}
+            >
+              <LogOut />
+            </button>
+          )}
         </div>
       </aside>
+
+      {showLogoutConfirm && (
+        <div className="navbar__confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="logout-confirm-title">
+          <div className="navbar__confirm-dialog">
+            <h2 id="logout-confirm-title">Are you sure?</h2>
+            <p>Do you want to log out and return to the login page?</p>
+            <div className="navbar__confirm-actions">
+              <button className="navbar__confirm-btn navbar__confirm-btn--yes" type="button" onClick={handleLogout}>
+                Yes
+              </button>
+              <button className="navbar__confirm-btn navbar__confirm-btn--no" type="button" onClick={closeLogoutConfirm}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
