@@ -1,16 +1,26 @@
-# React + Vite
+# Recipe Vault
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Recipe Vault is a modern recipe management web application where users can explore recipes, view detailed cooking instructions, save favorite dishes, and add their own recipes. The project is designed to provide a simple and organized platform for managing recipes in one place.
 
-Currently, two official plugins are available:
+## Features
+- Explore recipes
+- View recipe details
+- Add new recipes
+- Save favorite recipes
+- Delete user-created recipes
+- Search and filter recipes
+- Responsive design
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Technologies Used
+- React.js
+- JavaScript
+- CSS
+- React Router DOM
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/your-username/recipe-vault.git
+cd recipe-vault
+npm install
+npm run dev
