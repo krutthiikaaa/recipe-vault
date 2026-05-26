@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Heart, Clock, ChefHat, Flame } from 'lucide-react';
+import { Heart, Clock, ChefHat, Flame, Trash2 } from 'lucide-react';
 import './RecipeCard.css';
 
 /**
@@ -10,9 +10,11 @@ import './RecipeCard.css';
  * @param {string}   props.title        - Recipe title
  * @param {string}   props.category     - Category label (e.g. "Dessert", "Main Course")
  * @param {string}   props.cookingTime  - Cooking time (e.g. "30 min")
- * @param {boolean}  [props.isFavorite] - Initial favorite state (default: false)
+ * @param {boolean}  [props.isFavorite] - Controlled favorite state (default: false)
  * @param {number}   [props.difficulty] - Difficulty 1–3 (optional)
- * @param {Function} [props.onFavoriteToggle] - Callback when heart is toggled, receives new boolean
+ * @param {boolean}  [props.isUserCreated] - Whether the recipe was user-created (shows delete btn)
+ * @param {Function} [props.onFavoriteToggle] - Callback when heart is toggled
+ * @param {Function} [props.onDelete]   - Callback when delete button is clicked
  * @param {Function} [props.onClick]    - Callback when the card body is clicked
  */
 export default function RecipeCard({
@@ -20,27 +22,34 @@ export default function RecipeCard({
   title,
   category,
   cookingTime,
-  isFavorite: initialFavorite = false,
+  isFavorite = false,
   difficulty,
+  isUserCreated = false,
   onFavoriteToggle,
+  onDelete,
   onClick,
 }) {
-  const [favorite, setFavorite] = useState(initialFavorite);
   const [pop, setPop] = useState(false);
 
   const handleFavorite = useCallback(
     (e) => {
       e.stopPropagation(); // prevent card click
-      const next = !favorite;
-      setFavorite(next);
-      onFavoriteToggle?.(next);
+      onFavoriteToggle?.();
 
       // Trigger pop animation
       setPop(true);
       const timer = setTimeout(() => setPop(false), 450);
       return () => clearTimeout(timer);
     },
-    [favorite, onFavoriteToggle]
+    [onFavoriteToggle]
+  );
+
+  const handleDelete = useCallback(
+    (e) => {
+      e.stopPropagation(); // prevent card click
+      onDelete?.();
+    },
+    [onDelete]
   );
 
   const handleCardClick = () => {
@@ -95,15 +104,27 @@ export default function RecipeCard({
 
         {/* Favorite heart */}
         <button
-          className={`recipe-card__favorite${favorite ? ' active' : ''}${
+          className={`recipe-card__favorite${isFavorite ? ' active' : ''}${
             pop ? ' pop' : ''
           }`}
           onClick={handleFavorite}
-          aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
+          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           type="button"
         >
-          <Heart fill={favorite ? 'currentColor' : 'none'} />
+          <Heart fill={isFavorite ? 'currentColor' : 'none'} />
         </button>
+
+        {/* Delete button — only for user-created recipes */}
+        {isUserCreated && onDelete && (
+          <button
+            className="recipe-card__delete"
+            onClick={handleDelete}
+            aria-label={`Delete ${title}`}
+            type="button"
+          >
+            <Trash2 />
+          </button>
+        )}
       </div>
 
       {/* ---- Body ---- */}

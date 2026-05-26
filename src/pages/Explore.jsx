@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Search, X, SearchX, UtensilsCrossed } from 'lucide-react';
 import RecipeCard from '../components/RecipeCard';
-import recipes from '../data/recipes';
+import { useRecipes } from '../context/RecipeContext';
 import '../styles/Explore.css';
 
 /* ---- Category config ---- */
@@ -43,6 +43,7 @@ function parseCookTime(str) {
 }
 
 export default function Explore() {
+  const { recipes, toggleFavorite, isFavorite, deleteRecipe } = useRecipes();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -103,7 +104,7 @@ export default function Explore() {
     }
 
     return results;
-  }, [activeCategory, searchQuery, sortBy]);
+  }, [activeCategory, searchQuery, sortBy, recipes]);
 
   const clearSearch = () => setSearchQuery('');
 
@@ -211,6 +212,10 @@ export default function Explore() {
               category={recipe.category}
               cookingTime={recipe.cookTime}
               difficulty={DIFFICULTY_MAP[recipe.difficulty] || 0}
+              isFavorite={isFavorite(recipe.id)}
+              isUserCreated={recipe.isUserCreated}
+              onFavoriteToggle={() => toggleFavorite(recipe.id)}
+              onDelete={recipe.isUserCreated ? () => deleteRecipe(recipe.id) : undefined}
               onClick={() => navigate(`/recipe/${recipe.id}`)}
             />
           ))}

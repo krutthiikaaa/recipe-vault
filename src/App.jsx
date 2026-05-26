@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
+import Favorites from './pages/Favorites';
+import AddRecipe from './pages/AddRecipe';
 
 function App() {
   return (
@@ -10,16 +12,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/add-recipe" element={<PlaceholderPage title="Add Recipe" />} />
-        <Route path="/favorites" element={<PlaceholderPage title="Favorites" />} />
-        <Route path="/recipe/:id" element={<PlaceholderPage title="Recipe Details" />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/add-recipe" element={<AddRecipe />} />
+        <Route path="/recipe/:id" element={<ComingSoon title="Recipe Details" />} />
+        <Route path="*" element={<ComingSoon title="Page Not Found" />} />
       </Routes>
     </div>
   );
 }
 
-/* Temporary placeholder for pages not yet built */
-function PlaceholderPage({ title }) {
+/* Minimal placeholder for the one remaining unbuilt page */
+function ComingSoon({ title }) {
   return (
     <div
       style={{

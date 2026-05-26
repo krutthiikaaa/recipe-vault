@@ -10,7 +10,7 @@ import {
   Users,
 } from 'lucide-react';
 import RecipeCard from '../components/RecipeCard';
-import recipes from '../data/recipes';
+import { useRecipes } from '../context/RecipeContext';
 import '../styles/Home.css';
 
 /* ---- Category config with emojis ---- */
@@ -28,18 +28,19 @@ const CATEGORIES = [
 /* ---- Map difficulty strings → numbers ---- */
 const DIFFICULTY_MAP = { Easy: 1, Medium: 2, Hard: 3 };
 
-/* ---- Stats ---- */
-const STATS = [
-  { number: `${recipes.length}+`, label: 'Recipes', icon: BookOpen },
-  { number: `${CATEGORIES.length - 1}`, label: 'Cuisines', icon: UtensilsCrossed },
-  { number: '15k+', label: 'Happy Cooks', icon: Users },
-  { number: '4.9', label: 'Avg Rating', icon: Sparkles },
-];
-
 export default function Home() {
+  const { recipes, toggleFavorite, isFavorite } = useRecipes();
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+
+  /* ---- Stats (derived from live recipe count) ---- */
+  const STATS = useMemo(() => [
+    { number: `${recipes.length}+`, label: 'Recipes', icon: BookOpen },
+    { number: `${CATEGORIES.length - 1}`, label: 'Cuisines', icon: UtensilsCrossed },
+    { number: '15k+', label: 'Happy Cooks', icon: Users },
+    { number: '4.9', label: 'Avg Rating', icon: Sparkles },
+  ], [recipes.length]);
 
   /* ---- Filter, then take first 6 ---- */
   const featuredRecipes = useMemo(() => {
@@ -50,7 +51,7 @@ export default function Home() {
     }
 
     return filtered.slice(0, 6);
-  }, [activeCategory]);
+  }, [activeCategory, recipes]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -175,6 +176,8 @@ export default function Home() {
                 category={recipe.category}
                 cookingTime={recipe.cookTime}
                 difficulty={DIFFICULTY_MAP[recipe.difficulty] || 0}
+                isFavorite={isFavorite(recipe.id)}
+                onFavoriteToggle={() => toggleFavorite(recipe.id)}
                 onClick={() => navigate(`/recipe/${recipe.id}`)}
               />
             ))
