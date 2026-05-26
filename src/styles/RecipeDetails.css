@@ -1,0 +1,719 @@
+/* ============================================
+   Recipe Vault — Recipe Details Page Styles
+   Warm modern cooking-app aesthetic
+   ============================================ */
+
+/* ---------- Page Container ---------- */
+.rd {
+  padding-bottom: 80px;
+  animation: rdFadeIn 0.5s ease forwards;
+}
+
+@keyframes rdFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- Hero Section ---------- */
+.rd__hero {
+  position: relative;
+  width: 100%;
+  max-height: 520px;
+  overflow: hidden;
+}
+
+.rd__hero-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 480px;
+}
+
+.rd__hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.rd__hero-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2d241c 0%, #3a2e23 100%);
+  color: rgba(250, 245, 239, 0.15);
+}
+
+.rd__hero-placeholder svg {
+  width: 80px;
+  height: 80px;
+}
+
+/* Dark gradient overlay */
+.rd__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26, 21, 16, 1) 0%,
+    rgba(26, 21, 16, 0.85) 25%,
+    rgba(26, 21, 16, 0.3) 60%,
+    rgba(26, 21, 16, 0.1) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------- Floating Controls ---------- */
+.rd__hero-controls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rd__back-btn,
+.rd__fav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(20, 16, 12, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(250, 245, 239, 0.85);
+  cursor: pointer;
+  transition: background 0.25s ease,
+              color 0.25s ease,
+              transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rd__back-btn:hover,
+.rd__fav-btn:hover {
+  background: rgba(20, 16, 12, 0.8);
+  transform: scale(1.1);
+}
+
+.rd__back-btn:active,
+.rd__fav-btn:active {
+  transform: scale(0.92);
+}
+
+.rd__back-btn svg,
+.rd__fav-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rd__fav-btn.active {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.rd__fav-btn.active:hover {
+  background: rgba(239, 68, 68, 0.35);
+}
+
+/* ---------- Hero Info (overlapping bottom) ---------- */
+.rd__hero-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 0 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rd__category-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 6px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #faf5ef;
+  background: rgba(232, 133, 59, 0.9);
+  border-radius: 24px;
+  animation: rdSlideUp 0.5s 0.15s ease both;
+}
+
+.rd__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #faf5ef;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  animation: rdSlideUp 0.5s 0.2s ease both;
+}
+
+.rd__short-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: rgba(250, 245, 239, 0.6);
+  line-height: 1.6;
+  max-width: 600px;
+  animation: rdSlideUp 0.5s 0.25s ease both;
+}
+
+@keyframes rdSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Quick Stats Row ---------- */
+.rd__quick-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  animation: rdSlideUp 0.5s 0.3s ease both;
+}
+
+.rd__stat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(250, 245, 239, 0.65);
+  padding: 8px 16px;
+  background: rgba(45, 36, 28, 0.55);
+  border: 1px solid rgba(210, 150, 80, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease,
+              background 0.3s ease;
+}
+
+.rd__stat:hover {
+  border-color: rgba(232, 133, 59, 0.25);
+  background: rgba(45, 36, 28, 0.75);
+}
+
+.rd__stat-icon {
+  width: 16px;
+  height: 16px;
+  color: #e8853b;
+  flex-shrink: 0;
+}
+
+/* Difficulty dots */
+.rd__difficulty-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.rd__difficulty-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(250, 245, 239, 0.15);
+  transition: background 0.25s ease;
+}
+
+.rd__difficulty-dot.filled {
+  /* Color is set inline via style prop */
+}
+
+/* ---------- Main Content Area ---------- */
+.rd__content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* ---------- Section Title ---------- */
+.rd__section {
+  animation: rdSlideUp 0.5s 0.35s ease both;
+}
+
+.rd__section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #faf5ef;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.rd__section-icon {
+  width: 22px;
+  height: 22px;
+  color: #e8853b;
+  flex-shrink: 0;
+}
+
+/* ---------- Nutrition Grid ---------- */
+.rd__nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.rd__nutrition-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 22px 14px;
+  background: rgba(45, 36, 28, 0.5);
+  border: 1px solid rgba(210, 150, 80, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.3s ease,
+              transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+
+.rd__nutrition-card:hover {
+  border-color: rgba(210, 150, 80, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.rd__nutrition-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.rd__nutrition-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(250, 245, 239, 0.4);
+}
+
+/* ---------- Ingredients List ---------- */
+.rd__ingredients-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.rd__ingredient {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(250, 245, 239, 0.8);
+  background: rgba(45, 36, 28, 0.4);
+  border: 1px solid rgba(210, 150, 80, 0.06);
+  border-radius: 12px;
+  transition: border-color 0.25s ease,
+              background 0.25s ease,
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rd__ingredient:hover {
+  border-color: rgba(232, 133, 59, 0.2);
+  background: rgba(45, 36, 28, 0.6);
+  transform: translateX(4px);
+}
+
+.rd__ingredient-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f5a563, #e8853b);
+  flex-shrink: 0;
+}
+
+/* ---------- Step-by-Step Instructions ---------- */
+.rd__steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  counter-reset: none;
+}
+
+.rd__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 20px 22px;
+  background: rgba(45, 36, 28, 0.4);
+  border: 1px solid rgba(210, 150, 80, 0.06);
+  border-radius: 14px;
+  transition: border-color 0.25s ease,
+              background 0.25s ease,
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rd__step:hover {
+  border-color: rgba(232, 133, 59, 0.2);
+  background: rgba(45, 36, 28, 0.6);
+  transform: translateX(6px);
+}
+
+.rd__step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1a1510;
+  background: linear-gradient(135deg, #f5a563, #e8853b);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rd__step-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(250, 245, 239, 0.75);
+  line-height: 1.6;
+  padding-top: 5px;
+}
+
+/* ---------- Chef Tip Card ---------- */
+.rd__tip-card {
+  position: relative;
+  padding: 26px 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(232, 133, 59, 0.08) 0%,
+    rgba(245, 165, 99, 0.04) 100%
+  );
+  border: 1px solid rgba(232, 133, 59, 0.2);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.rd__tip-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(232, 133, 59, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.rd__tip-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.rd__tip-icon {
+  width: 22px;
+  height: 22px;
+  color: #f5a563;
+}
+
+.rd__tip-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f5a563;
+}
+
+.rd__tip-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  color: rgba(250, 245, 239, 0.65);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ---------- Bottom Back Button ---------- */
+.rd__bottom-action {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+.rd__explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e8853b;
+  background: transparent;
+  border: 1.5px solid rgba(232, 133, 59, 0.3);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.25s ease,
+              border-color 0.25s ease,
+              transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+
+.rd__explore-btn:hover {
+  background: rgba(232, 133, 59, 0.08);
+  border-color: #e8853b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232, 133, 59, 0.12);
+}
+
+.rd__explore-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.rd__explore-btn-icon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.rd__explore-btn:hover .rd__explore-btn-icon {
+  transform: translateX(-4px);
+}
+
+/* ---------- 404 Not Found ---------- */
+.rd-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 120px 28px;
+  gap: 16px;
+  animation: rdFadeIn 0.4s ease;
+}
+
+.rd-not-found__icon {
+  width: 72px;
+  height: 72px;
+  color: rgba(232, 133, 59, 0.2);
+  margin-bottom: 8px;
+}
+
+.rd-not-found__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #faf5ef;
+}
+
+.rd-not-found__text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(250, 245, 239, 0.4);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.rd-not-found__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 13px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #e8853b;
+  background: transparent;
+  border: 1.5px solid rgba(232, 133, 59, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.25s ease,
+              border-color 0.25s ease,
+              transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rd-not-found__btn:hover {
+  background: rgba(232, 133, 59, 0.08);
+  border-color: #e8853b;
+  transform: translateY(-2px);
+}
+
+.rd-not-found__btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .rd__hero-img-wrapper {
+    height: 360px;
+  }
+
+  .rd__hero-info {
+    padding: 0 22px 28px;
+  }
+
+  .rd__title {
+    font-size: 2rem;
+  }
+
+  .rd__short-desc {
+    font-size: 0.9rem;
+  }
+
+  .rd__quick-stats {
+    gap: 10px;
+  }
+
+  .rd__stat {
+    padding: 7px 12px;
+    font-size: 0.78rem;
+    border-radius: 10px;
+  }
+
+  .rd__content {
+    padding: 28px 20px 0;
+    gap: 28px;
+  }
+
+  .rd__section-title {
+    font-size: 1.2rem;
+  }
+
+  .rd__nutrition-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .rd__nutrition-value {
+    font-size: 1.25rem;
+  }
+
+  .rd__ingredients-list {
+    grid-template-columns: 1fr;
+  }
+
+  .rd__ingredient {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+  }
+
+  .rd__step {
+    padding: 16px 18px;
+    gap: 14px;
+  }
+
+  .rd__step-number {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    font-size: 0.75rem;
+  }
+
+  .rd__step-text {
+    font-size: 0.88rem;
+    padding-top: 3px;
+  }
+
+  .rd__tip-card {
+    padding: 22px 22px;
+  }
+
+  .rd__hero-controls {
+    top: 14px;
+    left: 14px;
+    right: 14px;
+  }
+
+  .rd__back-btn,
+  .rd__fav-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .rd__back-btn svg,
+  .rd__fav-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rd__hero-img-wrapper {
+    height: 280px;
+  }
+
+  .rd__title {
+    font-size: 1.6rem;
+  }
+
+  .rd__short-desc {
+    font-size: 0.82rem;
+  }
+
+  .rd__stat {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+
+  .rd__content {
+    padding: 22px 16px 0;
+    gap: 24px;
+  }
+
+  .rd__nutrition-card {
+    padding: 18px 10px;
+  }
+
+  .rd__nutrition-value {
+    font-size: 1.1rem;
+  }
+
+  .rd__explore-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .rd-not-found {
+    padding: 80px 20px;
+  }
+
+  .rd-not-found__title {
+    font-size: 1.5rem;
+  }
+}
