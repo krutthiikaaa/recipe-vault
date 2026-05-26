@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import Explore from './pages/Explore';
 import Favorites from './pages/Favorites';
 import AddRecipe from './pages/AddRecipe';
+import RecipeDetails from './pages/RecipeDetails';
+
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -13,6 +15,7 @@ function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
+import RecipeDetails from './pages/RecipeDetails';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -60,13 +63,13 @@ function App() {
           }
         />
         <Route
-          path="/recipe/:id"
-          element={
-            <ProtectedRoute>
-              <ComingSoon title="Recipe Details" />
-            </ProtectedRoute>
-          }
-        />
+  path="/recipe/:id"
+  element={
+    <ProtectedRoute>
+      <RecipeDetails />
+    </ProtectedRoute>
+  }
+/>
         <Route
           path="/login"
           element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
@@ -81,6 +84,7 @@ function App() {
             <Navigate to={isAuthenticated ? '/' : '/login'} replace />
           }
         />
+       
       </Routes>
     </div>
   );
