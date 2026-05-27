@@ -15,7 +15,8 @@ function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
-import RecipeDetails from './pages/RecipeDetails';
+
+
 
 function App() {
   const { isAuthenticated } = useAuth();
