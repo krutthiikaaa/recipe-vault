@@ -7,15 +7,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
-
 app.get("/", (req, res) => {
-  res.send("Recipe Vault Backend Running");
+  res.send("Backend is running successfully");
 });
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch((err) => console.log(err));
 
 const PORT = process.env.PORT || 5000;
 
