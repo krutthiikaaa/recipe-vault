@@ -44,7 +44,7 @@ function parseCookTime(str) {
 
 export default function Explore() {
   const { recipes, toggleFavorite, isFavorite, deleteRecipe } = useRecipes();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   /* Read initial query from URL ?q= */
@@ -57,7 +57,7 @@ export default function Explore() {
   /* Sync search input when URL query param changes */
   useEffect(() => {
     const q = searchParams.get('q') || '';
-    if (q) setSearchQuery(q);
+    setSearchQuery(q);
   }, [searchParams]);
 
   /* ---- Filter & sort recipes ---- */
@@ -69,7 +69,7 @@ export default function Explore() {
       results = results.filter((r) => r.category === activeCategory);
     }
 
-    // Search filter (title, category, ingredients, shortDescription)
+    // Search filter (title, category, ingredients, shortDescription, difficulty, cook time)
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
       results = results.filter((r) => {
@@ -77,8 +77,11 @@ export default function Explore() {
           r.title,
           r.category,
           r.shortDescription,
+          r.difficulty,
+          r.cookTime,
           ...(r.ingredients || []),
         ]
+          .filter(Boolean)
           .join(' ')
           .toLowerCase();
         return haystack.includes(q);
@@ -114,6 +117,16 @@ export default function Explore() {
     setSortBy('default');
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    if (q) {
+      setSearchParams({ q });
+    } else {
+      setSearchParams({});
+    }
+  };
+
   return (
     <div className="explore">
       {/* ======== Header ======== */}
@@ -135,7 +148,7 @@ export default function Explore() {
       <div className="explore__controls">
         {/* Search bar */}
         <div className="explore__search-row">
-          <div className="explore__search-wrapper">
+          <form className="explore__search-wrapper" onSubmit={handleSearch}>
             <Search className="explore__search-icon" />
             <input
               className="explore__search-input"
@@ -144,6 +157,9 @@ export default function Explore() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+            <button className="explore__search-submit" type="submit">
+              Search
+            </button>
             {searchQuery && (
               <button
                 className="explore__search-clear"
@@ -154,7 +170,7 @@ export default function Explore() {
                 <X />
               </button>
             )}
-          </div>
+          </form>
         </div>
 
         {/* Category chips */}
@@ -223,10 +239,11 @@ export default function Explore() {
       ) : (
         <div className="explore__empty">
           <SearchX className="explore__empty-icon" />
-          <h3 className="explore__empty-title">No recipes found</h3>
+          <h3 className="explore__empty-title">Recipe not available</h3>
           <p className="explore__empty-text">
-            We couldn't find any recipes matching your search. Try adjusting your
-            filters or search term.
+            We couldn't find any recipes matching your search.
+            If the dish isn't in the vault yet, you can try a different name
+            or add it manually.
           </p>
           <button
             className="explore__empty-btn"

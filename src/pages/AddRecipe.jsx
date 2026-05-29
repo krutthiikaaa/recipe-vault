@@ -35,11 +35,10 @@ export default function AddRecipe() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Build the recipe object and add to context + localStorage
-    addRecipe({
+    const recipe = {
       title: form.title,
       category: form.category,
       cookTime: form.cookTime,
@@ -48,14 +47,15 @@ export default function AddRecipe() {
       shortDescription: form.shortDescription,
       ingredients: form.ingredients.split('\n').filter(Boolean),
       instructions: form.instructions.split('\n').filter(Boolean),
-    });
+    };
 
-    // Show success toast
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+    const savedRecipe = await addRecipe(recipe);
 
-    // Reset form
-    setForm({ ...EMPTY_FORM });
+    if (savedRecipe) {
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      setForm({ ...EMPTY_FORM });
+    }
   };
 
   return (

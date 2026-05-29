@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   ChefHat,
@@ -8,6 +8,7 @@ import {
   Search,
   LogOut,
   User,
+  X,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
@@ -20,10 +21,13 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const searchInputRef = useRef(null);
   const { isAuthenticated, logout } = useAuth();
 
   const openLogoutConfirm = () => {
@@ -40,6 +44,31 @@ export default function Navbar() {
     setShowLogoutConfirm(false);
     navigate('/login');
   };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    const q = searchQuery.trim();
+    setSearchOpen(false);
+    if (q) {
+      navigate(`/explore?q=${encodeURIComponent(q)}`);
+    } else {
+      navigate('/explore');
+    }
+  };
+
+  const openSearch = () => {
+    setSearchOpen(true);
+  };
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+  };
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchOpen]);
 
   /* ---- Close mobile menu on route change ---- */
   useEffect(() => {
@@ -96,15 +125,42 @@ export default function Navbar() {
         </nav>
 
         {/* ---- Desktop Action Icons ---- */}
-        <div className="navbar__actions">
+        <div className={`navbar__actions${searchOpen ? ' search-open' : ''}`}>
           <span className="navbar__divider" aria-hidden="true" />
-          <button
-            className="navbar__action-btn"
-            aria-label="Search recipes"
-            type="button"
-          >
-            <Search />
-          </button>
+          {searchOpen ? (
+            <form className="navbar__search-form" onSubmit={handleSearchSubmit}>
+              <Search className="navbar__search-icon" />
+              <input
+                ref={searchInputRef}
+                className="navbar__search-input"
+                type="text"
+                placeholder="Search recipes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search recipes"
+              />
+              <button className="navbar__search-submit" type="submit">
+                Search
+              </button>
+              <button
+                className="navbar__search-close"
+                type="button"
+                aria-label="Close search"
+                onClick={closeSearch}
+              >
+                <X />
+              </button>
+            </form>
+          ) : (
+            <button
+              className="navbar__action-btn"
+              aria-label="Search recipes"
+              type="button"
+              onClick={openSearch}
+            >
+              <Search />
+            </button>
+          )}
           {isAuthenticated && (
             <button
               className="navbar__action-btn navbar__action-btn--avatar"
@@ -177,6 +233,10 @@ export default function Navbar() {
             className="navbar__mobile-action-btn"
             aria-label="Search recipes"
             type="button"
+            onClick={() => {
+              closeMenu();
+              openSearch();
+            }}
           >
             <Search />
           </button>

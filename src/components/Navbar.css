@@ -246,6 +246,66 @@
   flex-shrink: 0;
 }
 
+.navbar__search-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 999px;
+  padding: 8px 12px;
+  min-width: 280px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.navbar__search-icon {
+  width: 18px;
+  height: 18px;
+  color: #6b6b6b;
+  flex-shrink: 0;
+}
+
+.navbar__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #232323;
+  padding: 10px 0;
+}
+
+.navbar__search-input::placeholder {
+  color: #8e8e8e;
+}
+
+.navbar__search-submit,
+.navbar__search-close {
+  border: none;
+  background: transparent;
+  color: #6b6b6b;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+  transition: background var(--transition-fast),
+              color var(--transition-fast);
+}
+
+.navbar__search-submit:hover,
+.navbar__search-close:hover {
+  background: rgba(232, 133, 59, 0.1);
+  color: #e8853b;
+}
+
+.navbar__search-close svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* ---------- Hamburger Menu Button ---------- */
 .navbar__hamburger {
   display: none;
@@ -459,9 +519,19 @@
   }
 
   .navbar__nav,
-  .navbar__actions,
   .navbar__divider {
     display: none;
+  }
+
+  .navbar__actions {
+    display: none;
+  }
+
+  .navbar__actions.search-open {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 8px;
   }
 
   .navbar__hamburger {

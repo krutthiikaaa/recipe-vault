@@ -55,8 +55,11 @@ export default function Home() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/explore?q=${encodeURIComponent(searchQuery.trim())}`);
+    const query = searchQuery.trim();
+    if (query) {
+      navigate(`/explore?q=${encodeURIComponent(query)}`);
+    } else {
+      navigate('/explore');
     }
   };
 
