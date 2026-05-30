@@ -4,6 +4,11 @@ const AuthContext = createContext(null);
 const AUTH_KEY = 'recipeVaultAuth';
 const USER_KEY = 'recipeVaultUser';
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
+
+
 function loadJSON(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -22,7 +27,7 @@ export function AuthProvider({ children }) {
 
 const login = useCallback(async ({ email, password }) => {
   try {
-    const response = await fetch('http://localhost:5000/login', {
+    const response = await fetch(`${API_BASE_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +57,7 @@ const login = useCallback(async ({ email, password }) => {
 
 const signup = useCallback(async ({ email, password }) => {
   try {
-    const response = await fetch('http://localhost:5000/signup', {
+    const response = await fetch(`${API_BASE_URL}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
