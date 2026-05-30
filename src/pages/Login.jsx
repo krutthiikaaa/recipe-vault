@@ -19,7 +19,7 @@ function Login() {
 
   const validateEmail = (value) => /\S+@\S+\.\S+/.test(value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setInfo('');
@@ -39,7 +39,7 @@ function Login() {
       return;
     }
 
-    const success = login({ email, password });
+    const success = await login({ email, password });
     if (!success) {
       setError('Invalid email or password.');
       return;

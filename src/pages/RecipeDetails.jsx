@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -10,6 +10,10 @@ import {
   Heart,
   Lightbulb,
   UtensilsCrossed,
+  Pencil,
+  Trash2,
+  AlertTriangle,
+  X,
 } from 'lucide-react';
 import { useRecipes } from '../context/RecipeContext';
 import '../styles/RecipeDetails.css';
@@ -24,7 +28,9 @@ const DIFFICULTY_CONFIG = {
 export default function RecipeDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { recipes, toggleFavorite, isFavorite } = useRecipes();
+  const { recipes, toggleFavorite, isFavorite, deleteRecipe } = useRecipes();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   /* Find the matching recipe by id (handle both number & string ids) */
   const recipe = useMemo(() => {
@@ -59,6 +65,18 @@ export default function RecipeDetails() {
   const favorited = isFavorite(recipe.id);
   const diffConfig = DIFFICULTY_CONFIG[recipe.difficulty] || DIFFICULTY_CONFIG.Easy;
 
+  const handleEdit = () => {
+    navigate(`/edit-recipe/${recipe.id}`);
+  };
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleting(true);
+    await deleteRecipe(recipe.id);
+    setIsDeleting(false);
+    setShowDeleteModal(false);
+    navigate('/explore');
+  };
+
   return (
     <div className="rd">
       {/* ======== Hero Image Section ======== */}
@@ -89,14 +107,38 @@ export default function RecipeDetails() {
             <ArrowLeft />
           </button>
 
-          <button
-            className={`rd__fav-btn${favorited ? ' active' : ''}`}
-            onClick={() => toggleFavorite(recipe.id)}
-            type="button"
-            aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
-          >
-            <Heart fill={favorited ? 'currentColor' : 'none'} />
-          </button>
+          <div className="rd__hero-controls-right">
+            {/* Edit & Delete — only for user-created recipes */}
+            {recipe.isUserCreated && (
+              <>
+                <button
+                  className="rd__edit-btn"
+                  onClick={handleEdit}
+                  type="button"
+                  aria-label="Edit recipe"
+                >
+                  <Pencil />
+                </button>
+                <button
+                  className="rd__delete-btn"
+                  onClick={() => setShowDeleteModal(true)}
+                  type="button"
+                  aria-label="Delete recipe"
+                >
+                  <Trash2 />
+                </button>
+              </>
+            )}
+
+            <button
+              className={`rd__fav-btn${favorited ? ' active' : ''}`}
+              onClick={() => toggleFavorite(recipe.id)}
+              type="button"
+              aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              <Heart fill={favorited ? 'currentColor' : 'none'} />
+            </button>
+          </div>
         </div>
 
         {/* Title card overlapping the image bottom */}
@@ -220,8 +262,28 @@ export default function RecipeDetails() {
           </section>
         )}
 
-        {/* ---- Back Button ---- */}
+        {/* ---- Action Buttons ---- */}
         <div className="rd__bottom-action">
+          {recipe.isUserCreated && (
+            <div className="rd__user-actions">
+              <button
+                className="rd__action-btn rd__action-btn--edit"
+                onClick={handleEdit}
+                type="button"
+              >
+                <Pencil className="rd__action-btn-icon" />
+                Edit Recipe
+              </button>
+              <button
+                className="rd__action-btn rd__action-btn--delete"
+                onClick={() => setShowDeleteModal(true)}
+                type="button"
+              >
+                <Trash2 className="rd__action-btn-icon" />
+                Delete Recipe
+              </button>
+            </div>
+          )}
           <button
             className="rd__explore-btn"
             onClick={() => navigate('/explore')}
@@ -232,6 +294,59 @@ export default function RecipeDetails() {
           </button>
         </div>
       </div>
+
+      {/* ======== Delete Confirmation Modal ======== */}
+      {showDeleteModal && (
+        <div
+          className="rd__modal-overlay"
+          onClick={() => !isDeleting && setShowDeleteModal(false)}
+        >
+          <div
+            className="rd__modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="rd__modal-close"
+              onClick={() => setShowDeleteModal(false)}
+              type="button"
+              aria-label="Close modal"
+              disabled={isDeleting}
+            >
+              <X />
+            </button>
+
+            <div className="rd__modal-icon-wrapper">
+              <AlertTriangle className="rd__modal-icon" />
+            </div>
+
+            <h2 className="rd__modal-title">Delete Recipe?</h2>
+            <p className="rd__modal-text">
+              Are you sure you want to delete <strong>"{recipe.title}"</strong>?
+              This action cannot be undone.
+            </p>
+
+            <div className="rd__modal-actions">
+              <button
+                className="rd__modal-btn rd__modal-btn--cancel"
+                onClick={() => setShowDeleteModal(false)}
+                type="button"
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button
+                className="rd__modal-btn rd__modal-btn--delete"
+                onClick={handleDeleteConfirm}
+                type="button"
+                disabled={isDeleting}
+              >
+                <Trash2 className="rd__modal-btn-icon" />
+                {isDeleting ? 'Deleting…' : 'Delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

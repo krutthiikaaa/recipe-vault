@@ -20,29 +20,65 @@ function saveJSON(key, value) {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => loadJSON(AUTH_KEY, null));
 
-  const login = useCallback(({ email, password }) => {
-    const stored = loadJSON(USER_KEY, null);
-    if (!stored || stored.email !== email || stored.password !== password) {
-      return false;
-    }
-    const authData = { email };
-    saveJSON(AUTH_KEY, authData);
-    setUser(authData);
-    return true;
-  }, []);
+const login = useCallback(async ({ email, password }) => {
+  try {
+    const response = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-  const signup = useCallback(({ email, password }) => {
-    const stored = loadJSON(USER_KEY, null);
-    if (stored && stored.email === email) {
+    if (!response.ok) {
       return false;
     }
-    const userData = { email, password };
-    saveJSON(USER_KEY, userData);
-    const authData = { email };
+
+    const data = await response.json();
+
+    const authData = {
+      email: data.user.email,
+    };
+
     saveJSON(AUTH_KEY, authData);
     setUser(authData);
+
     return true;
-  }, []);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}, []);
+
+const signup = useCallback(async ({ email, password }) => {
+  try {
+    const response = await fetch('http://localhost:5000/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const data = await response.json();
+
+    const authData = {
+      email: data.user.email,
+    };
+
+    saveJSON(AUTH_KEY, authData);
+    setUser(authData);
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem(AUTH_KEY);

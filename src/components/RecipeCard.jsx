@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Heart, Clock, ChefHat, Flame, Trash2 } from 'lucide-react';
+import { Heart, Clock, ChefHat, Flame, Trash2, Pencil } from 'lucide-react';
 import './RecipeCard.css';
 
 /**
@@ -12,9 +12,10 @@ import './RecipeCard.css';
  * @param {string}   props.cookingTime  - Cooking time (e.g. "30 min")
  * @param {boolean}  [props.isFavorite] - Controlled favorite state (default: false)
  * @param {number}   [props.difficulty] - Difficulty 1–3 (optional)
- * @param {boolean}  [props.isUserCreated] - Whether the recipe was user-created (shows delete btn)
+ * @param {boolean}  [props.isUserCreated] - Whether the recipe was user-created (shows edit/delete btns)
  * @param {Function} [props.onFavoriteToggle] - Callback when heart is toggled
  * @param {Function} [props.onDelete]   - Callback when delete button is clicked
+ * @param {Function} [props.onEdit]     - Callback when edit button is clicked
  * @param {Function} [props.onClick]    - Callback when the card body is clicked
  */
 export default function RecipeCard({
@@ -27,6 +28,7 @@ export default function RecipeCard({
   isUserCreated = false,
   onFavoriteToggle,
   onDelete,
+  onEdit,
   onClick,
 }) {
   const [pop, setPop] = useState(false);
@@ -50,6 +52,14 @@ export default function RecipeCard({
       onDelete?.();
     },
     [onDelete]
+  );
+
+  const handleEdit = useCallback(
+    (e) => {
+      e.stopPropagation(); // prevent card click
+      onEdit?.();
+    },
+    [onEdit]
   );
 
   const handleCardClick = () => {
@@ -113,6 +123,18 @@ export default function RecipeCard({
         >
           <Heart fill={isFavorite ? 'currentColor' : 'none'} />
         </button>
+
+        {/* Edit button — only for user-created recipes */}
+        {isUserCreated && onEdit && (
+          <button
+            className="recipe-card__edit"
+            onClick={handleEdit}
+            aria-label={`Edit ${title}`}
+            type="button"
+          >
+            <Pencil />
+          </button>
+        )}
 
         {/* Delete button — only for user-created recipes */}
         {isUserCreated && onDelete && (

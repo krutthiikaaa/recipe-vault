@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const Recipe = require('./models/Recipe');
+const User = require('./models/User');
 const app = express();
 
 app.use(cors());
@@ -81,6 +82,74 @@ app.delete('/recipes/:id', async (req, res) => {
     res.status(500).json({ error: 'Unable to delete recipe' });
   }
 });
+
+app.post('/signup', async (req, res) => {
+
+  console.log("Signup request received", req.body);
+  
+  try {
+    const { email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({
+        error: 'User already exists',
+      });
+    }
+
+    const user = new User({
+      email,
+      password,
+    });
+
+    await user.save();
+
+    res.status(201).json({
+      message: 'Signup successful',
+      user: {
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Signup failed',
+    });
+  }
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({
+      email,
+      password,
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        error: 'Invalid credentials',
+      });
+    }
+
+    res.json({
+      message: 'Login successful',
+      user: {
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Login failed',
+    });
+  }
+});
+
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });

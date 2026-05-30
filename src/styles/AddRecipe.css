@@ -169,6 +169,67 @@
   gap: 18px;
 }
 
+/* ---------- Label Icon ---------- */
+.form-group__label-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+  margin-right: 5px;
+  color: #e8853b;
+}
+
+/* ---------- Shorter Textarea (Chef Tip) ---------- */
+.form-group__textarea--short {
+  min-height: 80px;
+}
+
+/* ---------- Nutrition Fieldset ---------- */
+.nutrition-fieldset {
+  border: 1px solid rgba(210, 150, 80, 0.12);
+  border-radius: 16px;
+  padding: 24px 22px 22px;
+  margin: 0;
+  background: rgba(45, 36, 28, 0.35);
+  transition: border-color 0.3s ease;
+}
+
+.nutrition-fieldset:focus-within {
+  border-color: rgba(232, 133, 59, 0.3);
+}
+
+.nutrition-fieldset__legend {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(250, 245, 239, 0.8);
+  padding: 0 6px;
+}
+
+.nutrition-fieldset__icon {
+  width: 16px;
+  height: 16px;
+  color: #f5a563;
+}
+
+.nutrition-fieldset__optional {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: rgba(250, 245, 239, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: 4px;
+}
+
+.nutrition-fieldset__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
 /* ---------- Submit Button ---------- */
 .add-recipe__submit {
   display: inline-flex;
@@ -257,5 +318,9 @@
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  .nutrition-fieldset__grid {
+    grid-template-columns: 1fr 1fr;
   }
 }

@@ -20,7 +20,7 @@ function Signup() {
 
   const validateEmail = (value) => /\S+@\S+\.\S+/.test(value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setInfo('');
@@ -45,7 +45,7 @@ function Signup() {
       return;
     }
 
-    const success = signup({ email, password });
+    const success = await signup({ email, password });
     if (!success) {
       setError('An account with this email already exists.');
       return;
